@@ -1,3 +1,4 @@
+const cson = require('cson');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -27,6 +28,8 @@ module.exports = function loadWhateverSync(file, opts) {
     case '.yml':
     case '.yaml':
       return yaml.safeLoad(fs.readFileSync(file, opts));
+    case '.cson':
+      return cson.parse(fs.readFileSync(file, opts));
     default:
       const contents = fs.readFileSync(file, opts);
 

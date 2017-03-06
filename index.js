@@ -1,3 +1,4 @@
+const cson = require('cson');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -37,6 +38,13 @@ const loadWhatever = module.exports = (file, opts) => new Promise((resolve, reje
         if (err) return reject(err);
         resolve(yaml.safeLoad(res));
       });
+      break;
+    // For CSON, the file is loaded/parsed through the CSON library
+    case '.cson':
+      fs.readFile(file, opts, (err, res) => {
+        if (err) return reject(err);
+        resolve(cson.parse(res));
+      })
       break;
     // For files with no extension, try to parse as JSON, then YAML
     default:

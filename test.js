@@ -26,6 +26,10 @@ describe('load()', () => {
     return expect(load('fixtures/yaml.yml')).to.eventually.eql(expected);
   });
 
+  it('parses CSON files', () => {
+    return expect(load('fixtures/cson.cson')).to.eventually.eql(expected);
+  });
+
   it('parses files with no extension as JSON', () => {
     return expect(load('fixtures/.noext-json')).to.eventually.eql(expected);
   });
@@ -63,6 +67,10 @@ describe('load.sync()', () => {
 
   it('parses YAML (.yml) files', () => {
     expect(load.sync('fixtures/yaml.yml')).to.eql(expected);
+  });
+
+  it('parses CSON files', () => {
+    expect(load.sync('fixtures/cson.cson')).to.eql(expected);
   });
 
   it('parses files with no extension as JSON', () => {

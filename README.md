@@ -1,10 +1,12 @@
 # load-whatever
 
-> Load and parse a file that might be a module, JSON, or YAML
+> Load and parse a file that might be a module, JSON, YAML, or CSON
 
 [![Travis](https://img.shields.io/travis/spacedoc/load-whatever.svg?maxAge=2592000)](https://travis-ci.org/spacedoc/load-whatever) [![npm](https://img.shields.io/npm/v/load-whatever.svg?maxAge=2592000)](https://www.npmjs.com/package/load-whatever)
 
-Sometimes you want to load and parse a file but don't care if it's a JavaScript file, a JSON file, or a YAML file. Who likes writing `switch` statements, anyway?
+Sometimes you want to load and parse a file but don't care how the file is written. Who likes writing `switch` statements, anyway?
+
+Loads JavaScript modules, JSON, YAML, and CSON.
 
 ## Installation
 
@@ -33,6 +35,7 @@ Load and parse the value of a file. It can be:
 - A JavaScript with `module.exports`.
 - A JSON file.
 - A YAML file.
+- A CSON file.
 
 The contents of the file will be parsed based on its extension. If the file has no extension, it will be parsed as JSON first, and if that doesn't work, as YAML next.
 
