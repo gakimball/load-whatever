@@ -94,3 +94,9 @@ describe('load.sync()', () => {
     expect(() => load.sync('notfound.js')).to.throw(Error);
   });
 });
+
+describe('supports', () => {
+  it('is an array', () => {
+    expect(load.supports).to.be.an('array');
+  });
+});

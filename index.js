@@ -66,3 +66,4 @@ const loadWhatever = module.exports = (file, opts) => new Promise((resolve, reje
 });
 
 module.exports.sync = require('./sync');
+module.exports.supports = ['json', 'yaml', 'yml', 'cson', 'js'];

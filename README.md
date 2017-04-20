@@ -48,6 +48,10 @@ Returns a promise containing the value. Rejects if there's an error in reading t
 
 Synchronous version of `load()`. Returns the parsed value of the file.
 
+### load.supports
+
+Array of strings containing the file extensions this library supports. Useful if you utilize glob matching to load files with this library.
+
 ## Local Development
 
 ```bash
