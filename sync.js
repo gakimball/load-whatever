@@ -23,8 +23,18 @@ module.exports = function loadWhateverSync(file, opts) {
 
   switch (extension) {
     case '.js':
-    case '.json':
-      return require(filePath);
+    case '.json': {
+      const module = require(filePath);
+      if (typeof module === 'function') {
+        try {
+          return module();
+        } catch (err) {
+          throw new Error(`Executing the function inside ${filePath} resulted in this exception:\n${err.message}`);
+        }
+      } else {
+        return module;
+      }
+    }
     case '.yml':
     case '.yaml':
       return yaml.safeLoad(fs.readFileSync(file, opts));

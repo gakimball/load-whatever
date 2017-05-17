@@ -28,9 +28,19 @@ const loadWhatever = module.exports = (file, opts) => new Promise((resolve, reje
   switch (extension) {
     // Node's `require()` function can parse a JS file with module.exports, or a JSON file
     case '.js':
-    case '.json':
-      resolve(require(filePath));
+    case '.json': {
+      const module = require(filePath);
+      if (typeof module === 'function') {
+        try {
+          resolve(module());
+        } catch (err) {
+          reject(new Error(`Executing the function inside ${filePath} resulted in this exception:\n${err.message}`));
+        }
+      } else {
+        resolve(module);
+      }
       break;
+    }
     // For YML, the file is loaded and then parsed
     case '.yml':
     case '.yaml':

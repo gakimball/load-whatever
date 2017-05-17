@@ -32,7 +32,8 @@ const config = load.sync('config.json'); // => {}
 
 Load and parse the value of a file. It can be:
 
-- A JavaScript with `module.exports`.
+- A JavaScript file with `module.exports`.
+  - If the value is a function, the function is executed, and the return value is used.
 - A JSON file.
 - A YAML file.
 - A CSON file.
@@ -42,11 +43,16 @@ The contents of the file will be parsed based on its extension. If the file has 
 - **file** (String): Path of file to load.
 - **options** (Object or String): *Optional.* Options for `fs.readFile`.
 
-Returns a promise containing the value. Rejects if there's an error in reading the file, parsing its contents, or if a file without an extension can't be parsed as JSON or YAML.
+Returns a promise containing the value. Rejects on any of these conditions:
+
+- There's an error reading the file.
+- There's an error parsing the file based on its extension.
+- A file with no extension can't be parsed as JSON or YAML.
+- A JavaScript function encounters an error when it's run.
 
 ### load.sync(file[, options])
 
-Synchronous version of `load()`. Returns the parsed value of the file.
+Synchronous version of `load()`. Returns the parsed value of the file. Throws an error for any of the reasons outlined by the asynchronous `load()`.
 
 ### load.supports
 

@@ -14,6 +14,10 @@ describe('load()', () => {
     return expect(load('fixtures/js.js')).to.eventually.eql(expected);
   });
 
+  it('pares JavaScript files that are functions', () => {
+    return expect(load('fixtures/func.js')).to.eventually.eql(expected);
+  });
+
   it('parses JSON files', () => {
     return expect(load('fixtures/json.json')).to.eventually.eql(expected);
   });
@@ -50,11 +54,19 @@ describe('load()', () => {
   it('rejects on errors', () => {
     return expect(load('notfound.js')).to.eventually.be.rejected;
   });
+
+  it('rejects if a JavaScript function throws an error', () => {
+    return expect(load('fixtures/func-error.js')).to.eventually.be.rejected;
+  });
 });
 
 describe('load.sync()', () => {
   it('parses JavaScript files', () => {
     expect(load.sync('fixtures/js.js')).to.eql(expected);
+  });
+
+  it('parses JavaScript files that are functions', () => {
+    expect(load.sync('fixtures/func.js')).to.eql(expected);
   });
 
   it('parses JSON files', () => {
@@ -92,6 +104,10 @@ describe('load.sync()', () => {
 
   it('throws errors', () => {
     expect(() => load.sync('notfound.js')).to.throw(Error);
+  });
+
+  it('throws an error encountered when loading a JavaScript function', () => {
+    expect(() => load.sync('fixtures/func-error.js')).to.throw(Error);
   });
 });
 
