@@ -18,6 +18,10 @@ describe('load()', () => {
     return expect(load('fixtures/func.js')).to.eventually.eql(expected);
   });
 
+  it('parses JavaScript files that are asynchronous functions', () => {
+    return expect(load('fixtures/async.js')).to.eventually.eql(expected);
+  });
+
   it('parses JSON files', () => {
     return expect(load('fixtures/json.json')).to.eventually.eql(expected);
   });
@@ -57,6 +61,10 @@ describe('load()', () => {
 
   it('rejects if a JavaScript function throws an error', () => {
     return expect(load('fixtures/func-error.js')).to.eventually.be.rejected;
+  });
+
+  it('rejects if an async JavaScript function rejects', () => {
+    return expect(load('fixtures/async-error.js')).to.eventually.be.rejected;
   });
 });
 
@@ -108,6 +116,10 @@ describe('load.sync()', () => {
 
   it('throws an error encountered when loading a JavaScript function', () => {
     expect(() => load.sync('fixtures/func-error.js')).to.throw(Error);
+  });
+
+  it('throws an error if an async function is returned', () => {
+    expect(() => load.sync('fixtures/async.js')).to.throw(Error);
   });
 });
 

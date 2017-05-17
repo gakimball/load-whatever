@@ -34,6 +34,7 @@ Load and parse the value of a file. It can be:
 
 - A JavaScript file with `module.exports`.
   - If the value is a function, the function is executed, and the return value is used.
+  - If the value is a Promise-returning function, the value inside the Promise is used.
 - A JSON file.
 - A YAML file.
 - A CSON file.
@@ -52,7 +53,9 @@ Returns a promise containing the value. Rejects on any of these conditions:
 
 ### load.sync(file[, options])
 
-Synchronous version of `load()`. Returns the parsed value of the file. Throws an error for any of the reasons outlined by the asynchronous `load()`.
+Synchronous version of `load()`. Returns the parsed value of the file. Supports all the same features as the asynchronous method **except for loading asynchronous functions**. Throws an error for any of the reasons outlined by the asynchronous `load()`, plus one more:
+
+- A JavaScript function returns a Promise.
 
 ### load.supports
 

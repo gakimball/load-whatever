@@ -2,6 +2,7 @@ const cson = require('cson');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const isPromise = require('is-promise');
 
 /**
  * Synchronous version of `loadWhatever()`.
@@ -26,10 +27,18 @@ module.exports = function loadWhateverSync(file, opts) {
     case '.json': {
       const module = require(filePath);
       if (typeof module === 'function') {
+        let value;
+
         try {
-          return module();
+          value = module();
         } catch (err) {
           throw new Error(`Executing the function inside ${filePath} resulted in this exception:\n${err.message}`);
+        }
+
+        if (isPromise(value)) {
+          throw new Error(`The file ${filePath} is an asynchronous function, and can't be loaded with load-whatever's sync() method.`);
+        } else {
+          return value;
         }
       } else {
         return module;
