@@ -1,6 +1,6 @@
 {
   "name": "load-whatever",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Load and parse a file that might be JS, JSON, YAML, or CSON",
   "main": "index.js",
   "scripts": {
