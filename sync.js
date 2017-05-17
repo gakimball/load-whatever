@@ -1,8 +1,8 @@
-const cson = require('cson');
 const fs = require('fs');
 const path = require('path');
-const yaml = require('js-yaml');
+const cson = require('cson');
 const isPromise = require('is-promise');
+const yaml = require('js-yaml');
 
 /**
  * Synchronous version of `loadWhatever()`.
@@ -10,17 +10,17 @@ const isPromise = require('is-promise');
  * @param {Object} [opts] - Options for `fs.readFile`.
  * @returns Parsed value.
  */
-module.exports = function loadWhateverSync(file, opts) {
+module.exports = (file, opts) => {
   if (typeof file !== 'string') {
-    throw new Error('load-whatever: file must be a string.');
+    throw new TypeError('load-whatever: file must be a string.');
   }
 
   opts = opts || {};
 
   const extension = path.extname(file);
-  const filePath = path.isAbsolute(file)
-    ? file
-    : path.join(process.cwd(), file);
+  const filePath = path.isAbsolute(file) ?
+    file :
+    path.join(process.cwd(), file);
 
   switch (extension) {
     case '.js':
@@ -49,19 +49,18 @@ module.exports = function loadWhateverSync(file, opts) {
       return yaml.safeLoad(fs.readFileSync(file, opts));
     case '.cson':
       return cson.parse(fs.readFileSync(file, opts));
-    default:
+    default: {
       const contents = fs.readFileSync(file, opts);
 
       try {
         return JSON.parse(contents);
-      }
-      catch (e) {
+      } catch (e) {
         try {
           return yaml.safeLoad(contents);
-        }
-        catch (e) {
+        } catch (e) {
           throw new Error(`Could not parse ${file} as JSON or YAML.`);
         }
       }
+    }
   }
-}
+};

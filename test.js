@@ -1,13 +1,15 @@
+/* eslint-env mocha */
+
 'use strict';
 
+const path = require('path');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const expect = chai.expect;
 const load = require('.');
-const path = require('path');
 
 chai.use(chaiAsPromised);
-const expected = { kittens: true };
+const expect = chai.expect;
+const expected = {kittens: true};
 
 describe('load()', () => {
   it('parses JavaScript files', () => {
